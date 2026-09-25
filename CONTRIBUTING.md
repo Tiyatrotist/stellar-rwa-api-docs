@@ -38,11 +38,22 @@ This monorepo contains two independent projects with separate toolchains:
 
 ```bash
 cd docs
-npm install
+npm ci
 npm run dev      # http://localhost:3000
-npm run build    # must pass before you open a PR
 npm run lint     # Check for style issues
 ```
+
+### Reproduce the docs CI checks locally
+
+Before pushing a docs change, run both checks from the `docs/` directory:
+
+```bash
+npm run check:mdx-samples
+npm run build
+```
+
+- `npm run check:mdx-samples` parses fenced TypeScript samples in the MDX documentation and catches sample syntax that cannot be parsed.
+- `npm run build` runs the production Next.js build and catches documentation, import, MDX, and build-time integration errors.
 
 ### API (Rust) — Maintainer-only
 
@@ -65,7 +76,7 @@ these commands helps you see what the automated checks look for.
 
 1. Fork and branch from `main`.
 2. Make your changes **inside `docs/`**.
-3. Run `npm run build` in `docs/` and make sure it passes.
+3. In `docs/`, run `npm run check:mdx-samples` and `npm run build` and make sure both pass.
 4. Open a PR with a clear description and, for content changes, a screenshot.
 
 ## Reporting API issues
